@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Class Resources | Feedforward</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --amber-500: #f59e0b;
+      --amber-400: #fbbf24;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--slate-50);
+      color: var(--slate-800);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    header {
+      margin-bottom: 56px;
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--slate-600);
+      max-width: 600px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .folder-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 20px;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .folder-card:hover {
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .folder-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .folder-name {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--slate-900);
+    }
+
+    .folder-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--slate-100);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .folder-icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--slate-600);
+    }
+
+    .zip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--slate-900);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .zip-btn:hover {
+      background: var(--slate-700);
+    }
+
+    .zip-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .alternatives {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .alternatives-title {
+      font-weight: 600;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .alternatives-desc {
+      font-size: 0.95rem;
+      color: var(--slate-500);
+      margin-bottom: 20px;
+    }
+
+    .platform-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .platform-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--slate-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .platform-link:hover {
+      background: var(--slate-100);
+      border-color: var(--slate-300);
+    }
+
+    .platform-link svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .note {
+      margin-top: 48px;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, var(--slate-100) 0%, var(--slate-50) 100%);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--slate-600);
+    }
+
+    .note strong {
+      color: var(--slate-800);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 20px 60px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .folder-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .platform-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">Feedforward</div>
+      <h1>AI Class Resources</h1>
+      <p class="subtitle">Download course materials below. If your organization blocks any download method, try one of the alternative platforms.</p>
+    </header>
+
+    <div class="section">
+      <h2 class="section-title">Course Materials</h2>
+
+      <!-- DOCS FOLDER -->
+      <div class="folder-card">
+        <div class="folder-header">
+          <div class="folder-name">
+            <div class="folder-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+              </svg>
+            </div>
+            docs/
+          </div>
+          <a href="docs.zip" class="zip-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Download ZIP
+          </a>
+        </div>
+      </div>
+
+      <!-- DOC-SUMMARY FOLDER -->
+      <div class="folder-card">
+        <div class="folder-header">
+          <div class="folder-name">
+            <div class="folder-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+              </svg>
+            </div>
+            doc-summary/
+          </div>
+          <a href="doc-summary.zip" class="zip-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Download ZIP
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Alternative Downloads</h2>
+      <div class="alternatives">
+        <div class="alternatives-title">Having trouble downloading?</div>
+        <p class="alternatives-desc">Some organizations restrict certain file sharing services. Try one of these alternatives:</p>
+        <div class="platform-links">
+          
+          <!-- REPLACE # WITH YOUR ACTUAL LINKS -->
+          <a href="#" class="platform-link">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+            Dropbox
+          </a>
+
+          <a href="#" class="platform-link">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.5 2L5.5 6.25 12.5 10.5 19.5 6.25 12.5 2zM5.5 17.75L12.5 22 19.5 17.75 12.5 13.5 5.5 17.75zM5 7.5v8l7 4.25v-8L5 7.5zM13 11.75v8l7-4.25v-8l-7 4.25z"/>
+            </svg>
+            Box
+          </a>
+
+          <a href="#" class="platform-link">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H6v-2h6v2zm4-4H6v-2h10v2zm0-4H6V7h10v2z"/>
+            </svg>
+            SharePoint
+          </a>
+
+          <a href="#" class="platform-link">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/>
+            </svg>
+            WeTransfer
+          </a>
+          <!-- END LINKS -->
+
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Need help?</strong> If none of these options work with your organization's security policies, contact us and we'll find another way to get you the materials.
+    </div>
+  </div>
+
+</body>
+</html>
